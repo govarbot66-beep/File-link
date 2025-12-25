@@ -1,27 +1,140 @@
 class script(object):
-    START_TXT = """<b>Hey {}, </b>\n\n<blockquote><i>Send me a file or add me as an admin to any channel to instantly generate file links.\n\nInvite me to your channel and I’ll instantly create download links for any media you share. I’ll also add the right buttons to each post with a URL, making access seamless.</i></blockquote>\n\n<blockquote><a href=https://t.me/RexBots_Official>➜ Add To Channel</a></blockquote>"""
 
-    RESTART_TXT = """\n<b>Bᴏᴛ Rᴇsᴛᴀʀᴛᴇᴅ !\n\n📅 Dᴀᴛᴇ : <code>{}</code>\n⏰ Tɪᴍᴇ : <code>{}</code>\n🌐 Tɪᴍᴇᴢᴏɴᴇ : <code>Asia/Kolkata</code>\n🛠️ Bᴜɪʟᴅ Sᴛᴀᴛᴜs: <code>v4.6.00 [ Sᴛᴀʙʟᴇ ]</code></b>"""
+    START_TXT = (
+        "<b>Hey {},</b>\n\n"
+        "<blockquote><b>"
+        "Send me a file or add me as an admin to any channel to instantly generate file links.\n\n"
+        "Invite me to your channel and I’ll instantly create download links for any media you share. "
+        "I’ll also add the right buttons to each post with a URL, making access seamless."
+        "</b></blockquote>\n\n"
+        "<blockquote><b>"
+        "<a href='https://t.me/ind_gamer_1'>➜ Add To Channel</a>"
+        "</b></blockquote>"
+    )
 
-    HELP_TXT = """<blockquote><b>You don't need many commands to use this bot\n\nJust send me files and I will give you direct download & streaming link\n\nAlso you can use me in your channel just add me and make me admin and see my power 💥\n\nFor more, use /help command\nMore, use /about command</b></blockquote>"""
-    
-    ADMIN_CMD_TXT = """<blockquote><b>\n\n# Admin Only Commands 👑  \n/ban - Ban a user/channel [FOR ADMINS USE ONLY]  \n/unban - Unban a user/channel [FOR ADMINS USE ONLY]  \n/broadcast - Send broadcast message [FOR ADMINS USE ONLY]  \n/pin_broadcast - Pin broadcast message [FOR ADMINS USE ONLY]  \n/restart - Restart the bot [FOR ADMINS USE ONLY]  \n/stats - Show bot statistics [FOR ADMINS USE ONLY]  \n/blocked - List of blocked users [FOR ADMINS USE ONLY] \n</b></blockquote>"""
+    RESTART_TXT = (
+        "<b>Bᴏᴛ Rᴇsᴛᴀʀᴛᴇᴅ !\n\n"
+        "📅 Dᴀᴛᴇ : <code>{}</code>\n"
+        "⏰ Tɪᴍᴇ : <code>{}</code>\n"
+        "🌐 Tɪᴍᴇᴢᴏɴᴇ : <code>Asia/Kolkata</code>\n"
+        "🛠️ Bᴜɪʟᴅ Sᴛᴀᴛᴜs : <code>v4.6.00 [ Stable ]</code>"
+        "</b>"
+    )
 
-    HELP2_TXT = """<blockquote><b>How to Use File to Link Bot\n\nBasic Usage:\n• Send any file or media from Telegram\n• Bot will generate permanent download and stream links\n• Use these links to download or stream content through our servers\n• For streaming, paste the provided link in any video player\n\nKey Features:\n• Permanent link generation\n• Direct download support\n• Video streaming capability\n• Channel support (Add bot as admin)\n• Custom shortener integration\n• Unlimited file size support\n\nChannel Usage:\n1. Add bot as admin to your channel\n2. Bot will automatically process files\n3. Links will be generated for all media\n\n⚠️ Important Notes:\n• All links are permanent and won't expire\n• Sharing inappropriate content will result in permanent ban\n• Report any issues to our support team\n\n🔞 Adult content strictly prohibited.\n\n📮 Help & Support:\n• Updates: @RexBots_Official\n• Support: @RexBots_Official\n\n <u><i>Report bugs to <a href='https://t.me/RexBots_Official'>Developer</a></u></i></b></blockquote>"""
+    HELP_TXT = (
+        "<blockquote><b>"
+        "You don't need many commands to use this bot.\n\n"
+        "Just send me files and I will give you direct download & streaming links.\n\n"
+        "You can also use me in your channel — just add me as admin and see my power 💥\n\n"
+        "For more info use /help\n"
+        "About bot use /about"
+        "</b></blockquote>"
+    )
 
-    CAPTION = """🎬 <i><a href='{}'>{}</a></i>"""
-    
-    LOG_TEXT = """<b>#NewUser {}\n    \nID - <code>{}</code>\nNᴀᴍᴇ - {}</b>"""
+    ADMIN_CMD_TXT = (
+        "<blockquote><b>"
+        "# Admin Only Commands 👑\n\n"
+        "/ban - Ban a user/channel\n"
+        "/unban - Unban a user/channel\n"
+        "/broadcast - Send broadcast message\n"
+        "/pin_broadcast - Send & pin broadcast\n"
+        "/restart - Restart the bot\n"
+        "/stats - Show bot statistics\n"
+        "/blocked - List blocked users\n"
+        "</b></blockquote>"
+    )
 
-    ABOUT_TXT = """<blockquote><b>╔══❰ {} ❱═════❍\n║╭━━━━━━━━━━━━━━━━━━➣\n║┣⪼🤖My Name : {}\n║┣⪼👦Developer : <a href='https://t.me/RexBots_Official'>Owner</a>\n║┣⪼❣️Update : <a href=https://t.me/RexBots_Official>RexBots Official</a>\n║┣⪼⏲️Bot Uptime :- {}\n║┣⪼📡Hosted On : Koyeb \n║┣⪼🗣️Language : Python \n║┣⪼📚Library : Pyrogram\n║┣⪼🗒️Version : {} [Stable]\n║╰━━━━━━━━━━━━━━━➣\n╚══════════════════❍ </b></blockquote>"""
+    HELP2_TXT = (
+        "<blockquote><b>"
+        "HOW TO USE FILE TO LINK BOT\n\n"
+        "BASIC USAGE:\n"
+        "• SEND ANY FILE OR MEDIA\n"
+        "• BOT GENERATES PERMANENT DOWNLOAD & STREAM LINKS\n"
+        "• PASTE STREAM LINK INTO ANY VIDEO PLAYER\n\n"
+        "KEY FEATURES:\n"
+        "• PERMANENT LINKS\n"
+        "• DIRECT DOWNLOAD\n"
+        "• VIDEO STREAMING\n"
+        "• CHANNEL SUPPORT\n"
+        "• UNLIMITED FILE SIZE\n\n"
+        "CHANNEL USAGE:\n"
+        "1. ADD BOT AS ADMIN\n"
+        "2. SEND FILES\n"
+        "3. LINKS AUTO-GENERATED\n\n"
+        "⚠️ IMPORTANT NOTES:\n"
+        "• LINKS NEVER EXPIRE\n"
+        "• ADULT CONTENT STRICTLY PROHIBITED\n\n"
+        "📮 HELP & SUPPORT:\n"
+        "• UPDATES & SUPPORT: @ind_gamer_1\n\n"
+        "<u>REPORT BUGS TO "
+        "<a href='https://t.me/ind_gamer_1'>DEVELOPER</a></u>"
+        "</b></blockquote>"
+    )
 
-    AUTH_TXT = """<i><b>Hᴇʏ {}! 👋\n\nTᴏ ᴄᴏɴᴛɪɴᴜᴇ ᴜsɪɴɢ ᴛʜɪs ʙᴏᴛ, ᴘʟᴇᴀsᴇ ᴊᴏɪɴ ᴏᴜʀ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ 💬\n\nSᴇʀᴠᴇʀ ʟᴏᴀᴅ ɪs ʜɪɡʜ, sᴏ ᴀᴄᴄᴇss ɪs ʟɪᴍɪᴛᴇᴅ ᴛᴏ ᴏᴜʀ ᴄʜᴀɴɴᴇʟ ᴍᴇᴍʙᴇʀs ᴏɴʟʏ 🚀</b></i>"""
+    CAPTION = "<b>🎬 <a href='{}'>{}</a></b>"
 
-    CAPTION_TXT = """\n<i><u>Your Link Generated !</u></i>\n\n<blockquote><b>📧 File Name :- </b> <i><a href={}>{}</a></i>\n\n<b>📦 File Size :- </b> <i>{}</i>\n\n<b><u><i>Tap To Copy Link 👇</i></u></b>\n\n<b>🖥 Stream  : </b> <code>{}</code>\n\n<b>📥 Download : </b> <code>{}</code>\n\n<b>🚸 Any issues dm : https://t.me/RexBots_Official</b></blockquote>"""
+    LOG_TEXT = (
+        "<b>#NEW_USER {}\n\n"
+        "ID : <code>{}</code>\n"
+        "NAME : {}"
+        "</b>"
+    )
 
-    VERIFICATION_TEXT = """<b>👋 ʜᴇʏ {},\n\n📌 <u>ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴠᴇʀɪꜰɪᴇᴅ ᴛᴏᴅᴀʏ, ᴛᴀᴘ ᴏɴ ᴛʜᴇ ᴠᴇʀɪꜰʏ ʟɪɴᴋ & ɢᴇᴛ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇss ꜰᴏʀ ɴᴇxᴛ ꜰᴜʟʟ ᴅᴀʏ.</u></b>"""
-    
-    VERIFIED_COMPLETE_TEXT = """<b>👋 ʜᴇʏ {},\n\nʏᴏᴜ ᴀʀᴇ ɴᴏᴡ ᴠᴇʀɪꜰɪᴇᴅ ꜰᴏʀ ᴛᴏᴅᴀʏ ☺️.\nᴇɴᴊᴏʏ ᴜɴʟɪᴍɪᴛᴇᴅ ᴍᴏᴠɪᴇs ᴏʀ sᴇʀɪᴇs ʟɪɴᴋs 💥.</b>"""
-    
-    VERIFIED_LOG_TEXT = """<b><u>☄ ᴜsᴇʀ ᴠᴇʀɪꜰɪᴇᴅ sᴜᴄᴄᴇssꜰᴜʟʟʏ ☄</u>\n\n⚡️ ɴᴀᴍᴇ:- {} [ <code>{}</code> ] \n📆 ᴅᴀᴛᴇ:- <code>{} </code></b>\n\n#verified_completed"""
+    ABOUT_TXT = (
+        "<blockquote><b>"
+        "╔══❰ {} ❱═════❍\n"
+        "║╭━━━━━━━━━━━━━━━━━━➣\n"
+        "║┣⪼ 🤖 BOT NAME : {}\n"
+        "║┣⪼ 👦 DEVELOPER : <a href='https://t.me/ind_gamer_1'>OWNER</a>\n"
+        "║┣⪼ ❣️ UPDATES : <a href='https://t.me/ind_gamer_1'>@ind_gamer_1</a>\n"
+        "║┣⪼ ⏲️ UPTIME : {}\n"
+        "║┣⪼ 📡 HOSTING : KOYEB\n"
+        "║┣⪼ 🗣️ LANGUAGE : PYTHON\n"
+        "║┣⪼ 📚 LIBRARY : PYROGRAM\n"
+        "║┣⪼ 🗒️ VERSION : {} [STABLE]\n"
+        "║╰━━━━━━━━━━━━━━━➣\n"
+        "╚══════════════════❍"
+        "</b></blockquote>"
+    )
 
+    AUTH_TXT = (
+        "<b>"
+        "HEY {}! 👋\n\n"
+        "TO CONTINUE USING THIS BOT, PLEASE JOIN OUR UPDATES CHANNEL 💬\n\n"
+        "SERVER LOAD IS HIGH, ACCESS IS LIMITED TO CHANNEL MEMBERS ONLY 🚀"
+        "</b>"
+    )
+
+    CAPTION_TXT = (
+        "<b><u>YOUR LINK GENERATED!</u></b>\n\n"
+        "<blockquote><b>"
+        "📧 FILE NAME : <a href='{}'>{}</a>\n\n"
+        "📦 FILE SIZE : {}\n\n"
+        "<u>TAP TO COPY LINK 👇</u>\n\n"
+        "🖥 STREAM : <code>{}</code>\n\n"
+        "📥 DOWNLOAD : <code>{}</code>\n\n"
+        "🚸 ANY ISSUES DM : https://t.me/ind_gamer_1"
+        "</b></blockquote>"
+    )
+
+    VERIFICATION_TEXT = (
+        "<b>HEY {},\n\n"
+        "<u>YOU ARE NOT VERIFIED TODAY.\n"
+        "TAP THE VERIFY LINK AND GET UNLIMITED ACCESS FOR 24 HOURS.</u>"
+        "</b>"
+    )
+
+    VERIFIED_COMPLETE_TEXT = (
+        "<b>HEY {},\n\n"
+        "YOU ARE NOW VERIFIED FOR TODAY ☺️\n"
+        "ENJOY UNLIMITED MOVIE & SERIES LINKS 💥"
+        "</b>"
+    )
+
+    VERIFIED_LOG_TEXT = (
+        "<b><u>☄ USER VERIFIED SUCCESSFULLY ☄</u>\n\n"
+        "⚡️ NAME : {} [ <code>{}</code> ]\n"
+        "📆 DATE : <code>{}</code>\n\n"
+        "#VERIFIED_COMPLETED"
+        "</b>"
+)
