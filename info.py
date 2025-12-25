@@ -53,9 +53,9 @@ PICS = environ.get('PICS', 'https://graph.org/file/3b53e1b446ae9a3c45b5b-f0a2d8f
 FILE_PIC = environ.get('FILE_PIC', 'https://graph.org/file/3b53e1b446ae9a3c45b5b-f0a2d8f6f543c97e77.jpg')
 
 # 📝 Captions
-FILE_CAPTION = environ.get('FILE_CAPTION', script.CAPTION)
-BATCH_FILE_CAPTION = environ.get('BATCH_FILE_CAPTION', script.CAPTION)
-CHANNEL_FILE_CAPTION = environ.get('CHANNEL_FILE_CAPTION', script.CAPTION)
+FILE_CAPTION=📁 <b>File Name:</b> {file_name}
+BATCH_FILE_CAPTION=📦 <b>File Name:</b> {file_name}
+CHANNEL_FILE_CAPTION=📢 <b>File Name:</b> {file_name}
 
 # ⏱️ Time & Limits
 PING_INTERVAL = int(environ.get("PING_INTERVAL", 1200))
