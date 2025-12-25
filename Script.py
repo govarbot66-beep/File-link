@@ -8,7 +8,7 @@ class script(object):
         "I’ll also add the right buttons to each post with a URL, making access seamless."
         "</b></blockquote>\n\n"
         "<blockquote><b>"
-        "<a href='https://t.me/ind_gamer_1'>➜ Add To Channel</a>"
+        "<a href='https://t.me/File_to_link_Go_bot?startchannel&admin=post_messages+edit_messages+delete_messages'>➜ Add To Channel</a>"
         "</b></blockquote>"
     )
 
