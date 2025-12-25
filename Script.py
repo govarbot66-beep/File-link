@@ -105,16 +105,16 @@ class script(object):
         "</b>"
     )
 
-CAPTION_TXT = (
-    "<b>{file_name}</b>\n\n"
-    "Size : <b>{file_size}</b>\n"
-    "Year : <b>{year}</b>\n"
-    "Quality : <b>{quality}</b>\n"
-    "Language : <b>{language}</b>\n\n"
-    "➠ Stream Link : <a href='{stream_link}'>Click Here</a>\n\n"
-    "➠ Download Link : <a href='{download_link}'>Click Here</a>\n\n"
-    "➠ Telegram File : <a href='{telegram_file}'>Click Here</a>"
-)
+    CAPTION_TXT = (
+        "<b>{file_name}</b>\n\n"
+        "Size : <b>{file_size}</b>\n"
+        "Year : <b>{year}</b>\n"
+        "Quality : <b>{quality}</b>\n"
+        "Language : <b>{language}</b>\n\n"
+        "➠ Stream Link : <a href='{stream_link}'>Click Here</a>\n\n"
+        "➠ Download Link : <a href='{download_link}'>Click Here</a>\n\n"
+        "➠ Telegram File : <a href='{telegram_file}'>Click Here</a>"
+    )
 
     VERIFICATION_TEXT = (
         "<b>HEY {},\n\n"
@@ -136,4 +136,4 @@ CAPTION_TXT = (
         "📆 DATE : <code>{}</code>\n\n"
         "#VERIFIED_COMPLETED"
         "</b>"
-)
+    )
