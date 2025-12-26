@@ -3,21 +3,25 @@ import re
 import json
 import base64
 from struct import pack
+
 from pyrogram import Client, filters
 from pyrogram.types import Message
-
 from pyrogram.errors import ChannelInvalid, UsernameInvalid, UsernameNotModified
 from pyrogram.file_id import FileId
+
 from info import LOG_CHANNEL, ADMINS, PUBLIC_FILE_STORE, BOT_USERNAME
 
-async def allowed(_, __, message):
+
+# ================= ACCESS CONTROL =================
+async def allowed(_, __, message: Message):
     if PUBLIC_FILE_STORE:
         return True
     if message.from_user and message.from_user.id in ADMINS:
         return True
     return False
-    
-# ✅ FileId Encoding Helpers
+
+
+# ================= FILE ID HELPERS =================
 def encode_file_id(s: bytes) -> str:
     r = b""
     n = 0
@@ -31,8 +35,10 @@ def encode_file_id(s: bytes) -> str:
             r += bytes([i])
     return base64.urlsafe_b64encode(r).decode().rstrip("=")
 
+
 def encode_file_ref(file_ref: bytes) -> str:
     return base64.urlsafe_b64encode(file_ref).decode().rstrip("=")
+
 
 def unpack_new_file_id(new_file_id: str):
     decoded = FileId.decode(new_file_id)
@@ -49,90 +55,104 @@ def unpack_new_file_id(new_file_id: str):
     return file_id, file_ref
 
 
-# ✅ BATCH HANDLER
-@Client.on_message(filters.command(['batch']) & filters.create(allowed))
-async def gen_link_batch(bot, message: Message):
-    if " " not in message.text:
-        return await message.reply("Use correct format.\nExample <code>/batch https://t.me/RexBots_Official/15 https://t.me/RexBots_Official/20</code>.")
+# ================= BATCH HANDLER =================
+@Client.on_message(filters.command(["batch", "pbatch"]) & filters.create(allowed))
+async def gen_link_batch(bot: Client, message: Message):
 
-    links = message.text.strip().split(" ")
-    if len(links) != 3:
-        return await message.reply("Use correct format.\nExample <code>/batch https://t.me/RexBots_Official/10 https://t.me/RexBots_Official/30</code>.")
+    if len(message.command) != 3:
+        return await message.reply(
+            "❌ Use correct format:\n"
+            "<code>/batch https://t.me/ind_gamer_1/10 https://t.me/ind_gamer_1/30</code>"
+        )
 
-    cmd, first, last = links
-    regex = re.compile(r"(https://)?(t\.me|telegram\.me|telegram\.dog)/(c/)?([\d\w_]+)/(\d+)")
-    
-    match = regex.match(first)
-    if not match:
-        return await message.reply("Invalid link")
-    
-    f_chat_id = match.group(4)
-    f_msg_id = int(match.group(5))
-    if f_chat_id.isnumeric():
-        f_chat_id = int("-100" + f_chat_id)
+    cmd, first, last = message.command
 
-    match = regex.match(last)
-    if not match:
-        return await message.reply("Invalid link")
-    
-    l_chat_id = match.group(4)
-    l_msg_id = int(match.group(5))
-    if l_chat_id.isnumeric():
-        l_chat_id = int("-100" + l_chat_id)
+    regex = re.compile(
+        r"(https://)?(t\.me|telegram\.me|telegram\.dog)/(c/)?([\w\d_]+)/(\d+)"
+    )
 
-    if f_chat_id != l_chat_id:
-        return await message.reply("Chat ids not matched.")
+    def parse(link):
+        m = regex.match(link)
+        if not m:
+            return None, None
+        chat = m.group(4)
+        msg_id = int(m.group(5))
+        if chat.isnumeric():
+            chat = int("-100" + chat)
+        return chat, msg_id
+
+    f_chat, f_msg = parse(first)
+    l_chat, l_msg = parse(last)
+
+    if not f_chat or not l_chat:
+        return await message.reply("❌ Invalid Telegram link")
+
+    if f_chat != l_chat:
+        return await message.reply("❌ Both links must be from the same channel")
 
     try:
-        chat_id = (await bot.get_chat(f_chat_id)).id
+        chat_id = (await bot.get_chat(f_chat)).id
     except ChannelInvalid:
-        return await message.reply("This may be a private channel / group. Make me an admin there.")
+        return await message.reply("❌ Make me admin in @ind_gamer_1")
     except (UsernameInvalid, UsernameNotModified):
-        return await message.reply("Invalid Link specified.")
+        return await message.reply("❌ Invalid username")
     except Exception as e:
-        return await message.reply(f"Errors - {e}")
+        return await message.reply(f"❌ Error: {e}")
 
-    sts = await message.reply("Generating link for your message. This may take time...")
+    status = await message.reply("⏳ Generating batch link...")
 
-    # ✅ Begin media extraction
-    FRMT = "Generating Link...\nTotal Messages: `{total}`\nDone: `{current}`\nRemaining: `{rem}`\nStatus: `{sts}`"
     outlist = []
-    og_msg = 0
-    tot = 0
+    total_range = l_msg - f_msg + 1
+    saved = 0
 
-    async for msg in bot.iter_messages(f_chat_id, l_msg_id, f_msg_id):
-        tot += 1
-        if msg.empty or msg.service or not msg.media:
+    async for msg in bot.iter_messages(
+        chat_id,
+        min_id=f_msg - 1,
+        max_id=l_msg
+    ):
+        if not msg.media:
             continue
+
         try:
-            file_type = msg.media
-            file = getattr(msg, file_type.value)
-            caption = getattr(msg, 'caption', '')
-            if caption:
-                caption = caption.html
-            if file:
-                outlist.append({
-                    "file_id": file.file_id,
-                    "caption": caption,
-                    "title": getattr(file, "file_name", ""),
-                    "size": file.file_size,
-                    "protect": cmd.lower().strip() == "/pbatch",
-                })
-                og_msg += 1
-        except Exception:
+            media = getattr(msg, msg.media.value)
+            outlist.append({
+                "file_id": media.file_id,
+                "caption": msg.caption.html if msg.caption else "",
+                "title": getattr(media, "file_name", ""),
+                "size": media.file_size,
+                "protect": cmd == "pbatch"
+            })
+            saved += 1
+        except:
             pass
-        if not og_msg % 20:
-            try:
-                await sts.edit(FRMT.format(total=l_msg_id - f_msg_id, current=tot, rem=(l_msg_id - f_msg_id - tot), sts="Saving..."))
-            except:
-                pass
 
-    filename = f"batchmode_{message.from_user.id}.json"
-    with open(filename, "w") as out:
-        json.dump(outlist, out)
+        if saved % 20 == 0:
+            await status.edit(
+                f"📦 Batch Progress\n"
+                f"Total Range: `{total_range}`\n"
+                f"Saved Files: `{saved}`"
+            )
 
-    post = await bot.send_document(LOG_CHANNEL, filename, file_name="Batch.json", caption="⚠️Generated for filestore.")
+    if not outlist:
+        return await status.edit("❌ No media files found in given range")
+
+    filename = f"batch_{message.from_user.id}_{message.id}.json"
+    with open(filename, "w") as f:
+        json.dump(outlist, f)
+
+    post = await bot.send_document(
+        LOG_CHANNEL,
+        filename,
+        file_name="Batch.json",
+        caption="📁 Batch generated"
+    )
+
     os.remove(filename)
 
-    file_id, ref = unpack_new_file_id(post.document.file_id)
-    await sts.edit(f"Here is your link\nContains `{og_msg}` files.\nhttps://t.me/{BOT_USERNAME}?start=BATCH-{file_id}")
+    file_id, _ = unpack_new_file_id(post.document.file_id)
+
+    await status.edit(
+        f"✅ Batch link generated successfully!\n"
+        f"Files: `{saved}`\n\n"
+        f"🔗 https://t.me/{BOT_USERNAME}?start=BATCH-{file_id}"
+)
