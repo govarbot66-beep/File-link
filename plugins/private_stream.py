@@ -6,7 +6,7 @@ from info import URL, BOT_USERNAME, BIN_CHANNEL, CHANNEL, PROTECT_CONTENT, FSUB,
 from database.users_db import db
 from web.utils.file_properties import get_hash
 from utils import get_size
-from plugins.govarx import rx_verification, is_user_allowed, is_user_joined
+from plugins.rexbots import rx_verification, is_user_allowed, is_user_joined
 from Script import script
 
 import urllib.parse
