@@ -52,11 +52,11 @@ AUTH_PICS = environ.get('AUTH_PICS', 'https://graph.org/file/3b53e1b446ae9a3c45b
 PICS = environ.get('PICS', 'https://graph.org/file/3b53e1b446ae9a3c45b5b-f0a2d8f6f543c97e77.jpg')
 FILE_PIC = environ.get('FILE_PIC', 'https://graph.org/file/3b53e1b446ae9a3c45b5b-f0a2d8f6f543c97e77.jpg')
 
+# 📝 File Captions
+FILE_CAPTION = environ.get('FILE_CAPTION', f"{script.CAPTION}")  # Caption for single file
+BATCH_FILE_CAPTION = environ.get('BATCH_FILE_CAPTION', f"{script.CAPTION}")  # Caption for batch files
+CHANNEL_FILE_CAPTION = environ.get('CHANNEL_FILE_CAPTION', f"{script.CAPTION}")  # Caption for channel posts
 
-# 📝 Captions (Fixed: added quotes)
-FILE_CAPTION = "📁 <b>File Name:</b> {file_name}"
-BATCH_FILE_CAPTION = "📦 <b>File Name:</b> {file_name}"
-CHANNEL_FILE_CAPTION = "📢 <b>File Name:</b> {file_name}"
 # ⏱️ Time & Limits
 PING_INTERVAL = int(environ.get("PING_INTERVAL", 1200))
 SLEEP_THRESHOLD = int(environ.get('SLEEP_THRESHOLD', 60))
